@@ -46,15 +46,9 @@ jobs:
           chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_plan_check.sh"
           "${GITHUB_WORKSPACE}/.github/workflows/tf_plan_check.sh"
           
-          terraform plan -out "tf_plan" 
+          terraform plan 
           
-      - name: Upload TF Plan
-        uses: actions/upload-artifact@v2
-        with:
-          name: tf_plan
-          path: ./
-          if-no-files-found: error
-          retention-days: 1
+ 
 
   terraform_apply:
     name: 'Terraform Apply'
@@ -80,16 +74,10 @@ jobs:
 
    
 
-    - name: Download TF Plan
-      uses: actions/download-artifact@v2
-      with:
-        name: tf_plan
-        path: ./tf_plan
 
     # Provision resources via Terraform        
     - name: Terraform Apply
       run: |
         chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
         "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
-        terraform show "tf_plan"
-        terraform apply "tf_plan"
+        terraform apply
