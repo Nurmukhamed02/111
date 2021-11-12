@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "my-nur-bucket-kg-dev"
+    bucket = "my-nur-bucket-kg"
     prefix = "main"
   }  
   
@@ -19,6 +19,7 @@ provider "google" {
   region  = var.region
   zone    = var.main_zone
 }
+
 
 module "google_networks" {
   source = "./networks"
