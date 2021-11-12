@@ -1,6 +1,6 @@
 variable "project_id" {
   type    = string
-  default = "playground-s-11-f797f629"
+  default = "playground-s-11-511d9527"
 }
 
 
