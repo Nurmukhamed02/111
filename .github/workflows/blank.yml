@@ -27,7 +27,11 @@ jobs:
         uses: actions/checkout@master
         
         
-        
+      - name: PWD
+        run: pwd
+      - name: LS 
+        run: ls 
+    
         
       
       - name: Setup GCP Service Account
