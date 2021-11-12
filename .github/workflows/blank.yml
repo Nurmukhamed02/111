@@ -3,81 +3,39 @@ name: 'Terraform CI'
 on: 
   workflow_dispatch:
   push:
-    paths:
-    - '/'
-
-
-
-
-
-
-concurrency: 
-  group: ${{ github.action == 'terraform-automation' }}
-  cancel-in-progress: true
-  
-
-jobs:
-  terraform_plan:
-    name: 'Terraform Plan'
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name != 'pull_request'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-        
-         
-      - name: Setup GCP Service Account
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          version: 'latest'
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
-
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        continue-on-error: true
-        run: |
-          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
-          "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
-          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_fmt.sh"
-          "${GITHUB_WORKSPACE}/.github/workflows/tf_fmt.sh"
-          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_plan_check.sh"
-          "${GITHUB_WORKSPACE}/.github/workflows/tf_plan_check.sh"
-          
-          terraform plan 
-          
+    branches:
+    - main
  
 
-  terraform_apply:
-    name: 'Terraform Apply'
+
+
+
+
+jobs:
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: tf_apply
-      
-      
-
-    steps: 
+    steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
 
-    - name: Setup GCP Service Account
-      uses: google-github-actions/setup-gcloud@master
-      with:
-        version: 'latest'
-        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
 
-   
+    - name: Terraform Init
+      run: terraform init
+      env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
 
-    # Provision resources via Terraform        
+    - name: Terraform Plan
+      run: terraform plan
+      env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
     - name: Terraform Apply
-      run: |
-        chmod +x "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
-        "${GITHUB_WORKSPACE}/.github/workflows/tf_init.sh"
-        terraform apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
+      env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
