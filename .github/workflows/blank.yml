@@ -8,9 +8,6 @@ on:
  
 
 
-
-
-
 jobs:
   terraform:
     name: 'Terraform'
