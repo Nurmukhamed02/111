@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = "playground-s-11-7ab412ea-e36504b56249.json"
+  credentials = file(var.credentials_file_path)
 
   project = var.project_id
   region  = var.region
