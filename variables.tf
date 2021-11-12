@@ -1,11 +1,11 @@
 variable "project_id" {
   type    = string
-  default = "playground-s-11-16e380d1"
+  default = "playground-s-11-62fd78b7"
 }
 
 variable "credentials_file_path" {
   type    = string
-  default = "playground-s-11-16e380d1-19d8f07c44ac.json"
+  default = "playground-s-11-62fd78b7-d80fd4d64a6c.json"
 }
 
 variable "region" {
