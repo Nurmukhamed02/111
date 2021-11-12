@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = ${{ secrets.GOOGLE_CREDENTIALS }}
+  
 
   project = var.project_id
   region  = var.region
