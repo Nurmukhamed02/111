@@ -5,7 +5,7 @@ variable "project_id" {
 
 variable "credentials_file_path" {
   type    = string
-  default = "playground-s-11-7ab412ea-e36504b56249.json"
+  default = ${{ secrets.GOOGLE_CREDENTIALS }}
 }
 
 variable "region" {
