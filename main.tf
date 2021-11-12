@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "nur-bucket-kg"
+    bucket = "my-bucket-nur-kg"
     prefix = "main"
   }  
   
