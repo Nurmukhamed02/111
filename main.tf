@@ -1,4 +1,9 @@
 terraform {
+  backend "gcs" {
+    bucket = "nur-bucket-kg"
+    prefix = "main"
+  }  
+  
   required_providers {
     google = {
       source  = "hashicorp/google"
