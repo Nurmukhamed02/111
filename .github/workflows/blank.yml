@@ -41,6 +41,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
       
+    - name: Terraform Init
+      run: terraform init
+      
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
