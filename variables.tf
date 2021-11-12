@@ -1,6 +1,6 @@
 variable "project_id" {
   type    = string
-  default = "playground-s-11-62fd78b7"
+  default = "playground-s-11-7ab412ea"
 }
 
 variable "credentials_file_path" {
