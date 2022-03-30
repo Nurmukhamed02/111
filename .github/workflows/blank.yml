@@ -2,9 +2,15 @@ name: 'Terraform CI CD'
 
 on: 
   workflow_dispatch:
-  push:
-    branches:
-    - main
+    inputs:
+      environment:
+        description: 'Define env name'     
+        required: true
+        default: 'prod'
+      branch:
+        description: 'Define branch name'     
+        required: true
+        default: 'main'
  
 
 
